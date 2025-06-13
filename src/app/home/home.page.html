@@ -1,20 +1,37 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Productos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  @if(productos.length===0){
+    <p>No hay productos disponibles</p>
+  }@else {
+    <ion-list>
+      @for(producto of productos; track producto.id) {
+        <ion-item>
+          <ion-thumbnail>
+            <img [src]="producto.rutaFotoBase64" [alt]="producto.titulo">
+          </ion-thumbnail>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+          <ion-label>
+            <h2>{{producto.titulo}}</h2>
+            <p>{{producto.descripcion}}</p>
+            <p><strong>Precio:</strong>{{producto.precio | currency}}</p>
+          </ion-label>
+
+          <ion-button slot="end" fill="clear" size="small" (click)="eliminarProducto(producto.id)">❌</ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  }
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="irAProductCreate()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
